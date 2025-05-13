@@ -14,25 +14,8 @@ A web application to book turfs for football, cricket, and other sports.
 
 - **Backend:** Django (Python)
 - **Frontend:** HTML, CSS, JavaScript
-- **Database:** SQLite (can be changed to PostgreSQL/MySQL)
+- **Database:** SQLite
 - **Deployment:** [coming soon]
-
-## Setup Instructions
-
-```bash
-# Clone the repository
-git clone https://github.com/Yug/truf-website.git
-cd truf-website
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run migrations
-python manage.py migrate
 
 # Run the server
 python manage.py runserver
