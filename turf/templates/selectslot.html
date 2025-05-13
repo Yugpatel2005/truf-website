@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} Select Slot {% endblock %}
+
+{% block main %}
+<div class="container mt-5 p-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Select Slot</h3>
+                </div>
+                <div class="card-body ">
+                    <form action="/selectslot" method="post" class="mx-auto">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="turfid" value="{{turfid}}">
+
+
+                        <!-- Display Existing Slots as Buttons -->
+                        {% for available_slot in slotsdata %}
+                            <button
+                                type="button" class="btn btn-primary m-3 p-3 "
+                                {% if not available_slot.is_booked %} onclick="selectSlot('{{ available_slot.id }}')" {% endif %}
+                                {% if available_slot.is_booked %} disabled {% endif %}>
+                                {{ available_slot.time_slot }} - {{ available_slot.start_time }} to {{ available_slot.end_time }}
+                            </button>
+                        {% endfor %}
+                        <!-- Hidden Input to Store Selected Slot ID -->
+                        <input type="hidden" id="selectedSlot" name="selectedSlot" value="">
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-secondary btn-block mt-5">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectSlot(slotId) {
+        // Set the selected slot ID in the hidden input
+        document.getElementById('selectedSlot').value = slotId;
+
+        // You can add additional logic or UI changes when a slot is selected if needed
+    }
+</script>
+{% endblock %}

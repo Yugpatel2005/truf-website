@@ -1,0 +1,95 @@
+{% extends 'base.html'%}
+{%block title%} Turfs {%endblock%}
+
+{%block main%}
+{% load static %}
+
+<!-- //w3l-header -->
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h2>Turfs</h2>
+            <p><a href="index.html">Home</a> /  Turfs</p>
+        </div>
+    </div>
+</section>
+
+<div class="container p-5">
+    <h2 class="mb-4">Available Turfs</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Maximum Capacity</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Price per Slot</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for turf in turfdata %}
+            <tr>
+                <td>{{ turf.name }}</td>
+                <td>{{ turf.location.area_name }}</td>
+                <td>{{ turf.maximum_capacity }}</td>
+                <td>{{ turf.contact_number }}</td>
+                <td>{{ turf.price_per_slot }}</td>
+                <td>{{ turf.is_available }}</td>
+                <td>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title text-primary" id="exampleModalLabel">Remove Turf</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Do you want to remove this turf ??</p>
+                          </div>
+                          <div class="modal-footer">
+                                <a href="/removeturf/{{turf.id}}" class="btn btn-secondary active"><i class="fa fa-remove"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="/editturf/{{turf.id}}" class="btn btn-secondary active"><i class="fa fa-edit"></i></a>
+                    <button type="button" class="btn btn-secondary active" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+       <div class="pagination ml-5 mt-5">
+                <span class="step-links">
+                  <span class="current">
+                    Page {{ turfdata.number }} of {{ turfdata.paginator.num_pages }}.
+                  </span>
+
+                  {% if turfdata.has_previous %}
+                  <a href="?page=1" class="btn btn-secondary active">&laquo;</a>
+                  {% endif %}
+
+                  {% for i in turfdata.paginator.page_range %}
+                  <span class="{% if turfdata.number == i %}current{% endif %}">
+                    <a href="?page={{ i }}" class="btn btn-secondary active">{{ i }}</a>
+                  </span>
+                  {% endfor %}
+
+
+                  {% if turfdata.has_next %}
+                  <a href="?page={{ paymentdata.paginator.num_pages }}" class="btn btn-secondary active">&raquo;</a>
+                  {% endif %}
+
+                </span>
+              </div>
+    <div>
+    </div>
+</div>
+{%endblock%}

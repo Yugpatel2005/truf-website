@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Photos {% endblock %}
+{% block main %}
+<!-- Header Section -->
+
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h3>Add Turf Images</h3>
+            <p><a href="index.html">Home</a> &nbsp;/ Turf Images </p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="pt-lg-5 pb-5">
+        <div class="container">
+            <div class="col-lg-10 p-5 border border-secondary  mx-auto">
+                <div class="contact-form">
+                    <h5 class="mb-4">Upload Turf Images</h5>
+                    <form action="/addphotossubmit" method="post" enctype="multipart/form-data" class="needs-validation"
+                        novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="turfid">Select Turf:</label>
+                            <select id="turfid" name="turfid" class="form-control" required>
+                                <option value="#" selected disabled>Select Turf</option>
+                                {% for turf in turfdata %}
+                                <option value="{{turf.id}}">{{turf.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">Please select a turf.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="photos">Select Images:</label>
+                            <input type="file" id="photos" name="photos" accept="image/*" multiple required
+                                class="form-control-file">
+                            <div class="invalid-feedback">Please choose at least one image.</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock %}

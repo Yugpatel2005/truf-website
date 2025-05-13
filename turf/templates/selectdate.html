@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{% block title %} Book Turf {% endblock %}
+
+{% block main %}
+<div class="container mt-5 p-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Select Date</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/selectslotpage" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="turfid" value="{{turfid}}">
+
+                        <!-- Date Picker -->
+                        <div class="form-group">
+                            <label for="date">Select Date:</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary btn-block ">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Datepicker Script -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    $(function() {
+        $("#date").datepicker({
+            dateFormat: 'yy-mm-dd', // Choose the date format that matches your Django model
+            minDate: 0,  // Set the minimum date to today
+            showButtonPanel: true,
+            closeText: 'Close'
+            // You can add more options as needed
+        });
+    });
+</script>
+{% endblock %}

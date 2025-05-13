@@ -1,0 +1,101 @@
+{% extends 'base.html'%}
+{%block title%} Turfs Slots{%endblock%}
+
+{%block main%}
+{% load static %}
+
+<!-- //w3l-header -->
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h3> Slots List</h3>
+            <p><a href="index.html">Home</a> / Slots List</p>
+        </div>
+    </div>
+</section>
+
+<div class="container p-5">
+    <h2 class="mb-4">Available Slots</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Turf Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time slot</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">is Booked</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot in slotsdata %}
+            <tr>
+                <td>{{ slot.turf.name }}</td>
+                <td>{{ slot.date }}</td>
+                <td>{{ slot.time_slot }}</td>
+                <td>{{ slot.start_time }}</td>
+                <td>{{ slot.end_time }}</td>
+                <td>{{ slot.is_booked }}</td>
+                <td class="text-center">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title text-primary" id="exampleModalLabel">Remove Time Slot</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>Do you want to remove this time slot ??</p>
+                          </div>
+                          <div class="modal-footer">
+                            <a href="/removeslot/{{slot.id}}" class="btn btn-secondary active">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary active" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+             <div class="pagination ml-5 mt-5">
+                <span class="step-links">
+                  <span class="current">
+                    Page {{ slotsdata.number }} of {{ slotsdata.paginator.num_pages }}.
+                  </span>
+
+                  {% if slotsdata.has_previous %}
+                  <a href="?page=1" class="btn btn-secondary active">&laquo;</a>
+                  {% endif %}
+
+                  {% for i in slotsdata.paginator.page_range %}
+                  <span class="{% if slotsdata.number == i %}current{% endif %}">
+                    <a href="?page={{ i }}" class="btn btn-secondary active">{{ i }}</a>
+                  </span>
+                  {% endfor %}
+
+
+                  {% if slotsdata.has_next %}
+                  <a href="?page={{ slotsdata.paginator.num_pages }}" class="btn btn-secondary active">&raquo;</a>
+                  {% endif %}
+
+                </span>
+              </div>
+
+    </div>
+</div>
+
+
+<script>
+    $('#exampleModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>
+
+{%endblock%}

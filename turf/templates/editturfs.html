@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{%block title%} Edit Turf {%endblock%}
+{%block main%}
+{% load static %}
+
+<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h3>Edit Turfs</h3>
+            <p><a href="/">Home</a> &nbsp; / <a href="/turflist">Turf</a>  / Edit Turfs</p>
+        </div>
+    </div>
+</section>
+<!-- Bootstrap CSS link -->
+<div class="padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 p-5 border border-secondary  mx-auto">
+                <h2 class="mb-4">Add New Turf</h2>
+                <!-- Turf Insertion Form -->
+                <form action="/updateturf/{{turfdata.id}}" method="post">
+                    {% csrf_token %}
+                    <!-- Manager Field (Assuming logged-in manager's ID is passed in the URL or session) -->
+                    <input type="hidden" name="manager" value="{{ uid }}">
+
+                    <!-- Turf Name -->
+                    <div class="form-group">
+                        <label for="name">Turf Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{turfdata.name}}" required>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required>{{turfdata.description}}</textarea>
+                    </div>
+
+                    <!-- Category Dropdown -->
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select class="form-control" id="category" name="category" >
+                            <option value="{{ turfdata.category.id}}" selected>{{ turfdata.category.cate_name}}</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.cate_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Location Dropdown -->
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <select class="form-control" id="location" name="location" >
+                            <option value="{{ turfdata.location.id }}" selected>{{ turfdata.location.area_name}}</option>
+                            {% for location in locations %}
+                            <option value="{{ location.id }}">{{ location.area_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div class="form-group">
+                        <label for="contact_number">Contact Number:</label>
+                        <input type="text" class="form-control" id="contact_number" name="contact_number" value="{{turfdata.contact_number}}" required>
+                    </div>
+
+                    <!-- Contact Email -->
+                    <div class="form-group">
+                        <label for="contact_email">Contact Email:</label>
+                        <input type="email" class="form-control" id="contact_email" name="contact_email" value="{{turfdata.contact_email}}" required>
+                    </div>
+
+                    <!-- Price Per Slot -->
+                    <div class="form-group">
+                        <label for="price_per_slot">Price Per Slot:</label>
+                        <input type="number" class="form-control" id="price_per_slot" name="price_per_slot" value="{{turfdata.price_per_slot}}" required>
+                    </div>
+
+                    <!-- Maximum Capacity -->
+                    <div class="form-group">
+                        <label for="maximum_capacity">Maximum Capacity:</label>
+                        <input type="number" class="form-control" id="maximum_capacity" name="maximum_capacity"
+                            value="{{turfdata.maximum_capacity}}" required>
+                    </div>
+
+                    <!-- Rules and Regulations -->
+                    <div class="form-group">
+                        <label for="rules_and_regulations">Rules and Regulations:</label>
+                        <textarea class="form-control" id="rules_and_regulations" name="rules" rows="3"
+                            required>{{turfdata.rules_and_regulations}}</textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-secondary active">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

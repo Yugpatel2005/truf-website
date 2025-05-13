@@ -1,0 +1,61 @@
+{%extends 'base.html'%}
+{%block title%} Turfs List {%endblock%}
+
+{%block main%}
+{%load static%}
+
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h2>Turfs</h2>
+            <p><a href="index.html">Home</a> /  Turf List</p>
+        </div>
+    </div>
+</section>
+
+<div class="best-rooms w3l-blog py-5">
+    <div class="container py-lg-5 py-sm-4">
+        <div class="ban-content-inf row">
+            {%for turf,img in combineddata%}
+            <div class="maghny-gd-1 col-lg-4 col-md-6">
+                <div class="maghny-grid">
+                    <figure class="effect-lily">
+                            {%if img%}
+                                <img class="img-fluid" src="/media/{{img.photo}}" alt="#" height="200px" style=height:250px;">
+                            {%endif%}
+                        <figcaption class="mb-5">
+                            <div>
+                                <h4 class="room-title">{{turf.name}}</h4>
+                                <h4 class="top-text"> <b> {{turf.category}}</b></h4>
+                            </div>
+                        </figcaption>
+                    </figure>
+                    <div class="room-info">
+                        <h3 class="room-title"><a href="#url">{{turf.name}}</a></h3>
+                        <ul class="mb-3">
+                            <li><span class="fa fa-users"></span> {{turf.maximum_capacity}}</li>
+                            <li><span class="fa fa-map-marker"></span>{{turf.location}}</li>
+                            <li><span class="fa fa-clock-o" style="font-size:1.2rem;"></span>{{turf.duration_per_slot}} Hours</li>
+
+                        </ul>
+                        <h5>Slot Price: {{turf.price_per_slot}} &#x20B9;</h5>
+                        <p>Description: {{turf.description |slice:70}}</p>
+                        <a  href="/selectdate/{{turf.id}}" class="btn mt-sm-4 mt-3">Book Now</a>
+                        <div class="room-info-bottom">
+                            <ul class="room-amenities">
+                                <li><a href="#url"><span class="fa fa-bed" title="Beds"></span></a></li>
+                                <li><a href="#url"><span class="fa fa-television" title="Television"></span></a></li>
+                                <li><a href="#url"><span class="fa fa-wheelchair-alt"
+                                            title="Private Bathroom"></span></a></li>
+                                <li><a href="#url"><span class="fa fa-motorcycle" title="Bike Rental"></span></a></li>
+                            </ul>
+                            <a href="turfdetails/{{turf.id}}" class="btn view">Full Info →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+        </div>
+    </div>
+</div>
+{%endblock%}

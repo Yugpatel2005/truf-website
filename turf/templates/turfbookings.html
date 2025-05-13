@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{%block title%} Turfs Bookings {%endblock%}
+
+{%block main%}
+{% load static %}
+
+<!-- //w3l-header -->
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h2>Turfs</h2>
+            <p><a href="/">Home</a> /  Turfs Bookings</p>
+        </div>
+    </div>
+</section>
+
+<div class="container p-5">
+    <h2 class="mb-4">Available Turfs</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Turf</th>
+                <th scope="col">Time Slot</th>
+                <th scope="col">Status</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Booked Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookingdata %}
+            <tr>
+                <td>{{ booking.user.name }}</td>
+                <td>{{ booking.turf.name}}</td>
+                <td>{{ booking.slot}}</td>
+                <td>{{ booking.booking_status }}</td>
+                <td>{{ booking.payment_status }}</td>
+                <td>{{ booking.booked_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+       <div class="pagination ml-5 mt-5">
+                <span class="step-links">
+                  <span class="current">
+                    Page {{ bookingdata.number }} of {{ bookingdata.paginator.num_pages }}.
+                  </span>
+
+                  {% if bookingdata.has_previous %}
+                  <a href="?page=1" class="btn btn-secondary active">&laquo;</a>
+                  {% endif %}
+
+                  {% for i in bookingdata.paginator.page_range %}
+                  <span class="{% if bookingdata.number == i %}current{% endif %}">
+                    <a href="?page={{ i }}" class="btn btn-secondary active">{{ i }}</a>
+                  </span>
+                  {% endfor %}
+
+
+                  {% if bookingdata.has_next %}
+                  <a href="?page={{ bookingdata.paginator.num_pages }}" class="btn btn-secondary active">&raquo;</a>
+                  {% endif %}
+                </span>
+       </div>
+
+    <div>
+    </div>
+</div>
+{%endblock%}

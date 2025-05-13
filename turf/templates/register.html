@@ -1,0 +1,123 @@
+{% extends 'base.html'%}
+{%block ttile%} Booking {%endblock%}
+
+{%block main%}
+{% load static %}
+<style>
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+
+<!-- //w3l-header -->
+<section class="w3l-booking-top">
+    <!-- /form-16-section -->
+    <div class="booking-form-61">
+        <div class="container">
+            <div class="row">
+            <div class="col-sm-6 col-12 mt-5 pt-5">
+                <div class="booking-forms-16-info align-self">
+                    <h5>Your Reservation</h5>
+                    <h3 class="title-big">Select the Room, check for availability and book it.</h3>
+                    <p>Lorem ipsum dolor sit amet,Ea consequuntur illum facere aperiam sequi optio consectetur
+                        adipisicing elit Ea consequuntur illum.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 form-right-inf">
+                <div class="booking-form-content">
+                    <h6>Register Now</h6>
+                    <form action="/createuser" class="book-depature-6" id="registerform" method="post">
+                        {%csrf_token%}
+                        <div class="d-grid grid-col-2">
+                            <div class="hny-frm_grid">
+                                <h5>Name</h5>
+                                <input class="name" name="name" type="text" placeholder="Your Name" required="">
+                            </div>
+                            <div class="hny-frm_grid">
+                                <h5>Phone Number</h5>
+                                <input class="phone" name="phone" type="tel" pattern="[6789][0-9]{9}" placeholder="Phone Number" required="">
+                            </div>
+
+                            <div class="hny-frm_grid">
+                                <h5>Email</h5>
+                                <input class="email" name="email" type="email" placeholder="Email Id" required="">
+                            </div>
+
+                            <div class="hny-frm_grid">
+                                <h5>Select Role</h5>
+                                <select name="role" required="">
+                                    <option value="user">User</option>
+                                    <option value="manager">Manager</option>
+                                </select>
+                            </div>
+
+                            <div class="hny-frm_grid">
+                                <h5>Password</h5>
+                                <input class="password" name="password" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,16}$" placeholder="password"
+                                    required="">
+                                <span id="passwordError" class="error"></span>
+                            </div>
+
+                            <div class="hny-frm_grid">
+                                <h5>Confirm Password</h5>
+                                <input name="confirmpassword" type="password" placeholder="password" required="">
+                                <span id="passwordError2" class="error"></span>
+                            </div>
+                        </div>
+                        <button class="btn btn-style btn-secondary book mt-3">Register Now</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+  function setupFormValidation(formId) {
+    var form = document.getElementById(formId);
+    form.addEventListener('submit', function(event) {
+      // Reset error messages
+      clearErrors(form);
+
+      // Validate name, email, phone, dob as before...
+
+      // Validate password
+      var passwordInput = form.querySelector('[name="password"]');
+      var password = passwordInput.value.trim();
+      if (password === '') {
+        displayError(form, 'passwordError', 'Password is required');
+        event.preventDefault();
+      } else if (!isValidPassword(password)) {
+        displayError(form, 'passwordError', 'Invalid password format');
+        event.preventDefault();
+      }
+    });
+  }
+
+  function isValidPassword(password) {
+    // Password should contain at least 1 uppercase, 1 lowercase, 1 number,
+    // 1 special character, and be between 8 and 16 characters.
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+    return passwordRegex.test(password);
+  }
+
+  function displayError(form, id, message) {
+    var errorElement = form.querySelector('#' + id);
+    errorElement.textContent = message;
+  }
+
+  function clearErrors(form) {
+    var errorElements = form.getElementsByClassName('error');
+    for (var i = 0; i < errorElements.length; i++) {
+      errorElements[i].textContent = '';
+    }
+  }
+
+  setupFormValidation('registerform');
+  setupFormValidation('loginform');
+
+</script>
+{%endblock%}

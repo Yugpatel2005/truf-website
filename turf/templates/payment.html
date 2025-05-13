@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %} Payment Form {% endblock %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Payment Form</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/savepayment" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="slotid" value="{{slotid}}">
+                        <input type="hidden" name="turfid" value="{{turfid}}">
+                        <input type="hidden" name="method" value="{{method}}">
+                        <input type="hidden" name="bookingid" value="{{bookingid}}">
+
+                        <!-- Payment Amount -->
+                        <div class="form-group">
+                            <label for="amount">Amount:</label>
+                            <input type="number" class="form-control" id="amount" value="{{amount}}" name="amount" required readonly>
+                        </div>
+
+                        <!-- Card Number -->
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number:</label>
+                            <input type="number" maxlength="16"  class="form-control" id="cardNumber" name="cardNumber" required>
+                        </div>
+
+                        <!-- Expiry Date -->
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date:</label>
+                            <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                        </div>
+
+                        <!-- CVV -->
+                        <div class="form-group">
+                            <label for="cvv">CVV:</label>
+                            <input type="text" class="form-control" id="cvv" name="cvv" required>
+                        </div>
+
+                        <!-- Name on Card -->
+                        <div class="form-group">
+                            <label for="nameOnCard">Name on Card:</label>
+                            <input type="text" class="form-control" id="nameOnCard" name="nameOnCard" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-block">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

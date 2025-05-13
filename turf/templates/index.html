@@ -1,0 +1,266 @@
+{%extends 'base.html'%}
+{%block title%} Home | turf booking {%endblock%}
+{%load static%}
+
+{%block main%}
+
+<!-- main-slider -->
+<section class="w3l-main-slider" id="home" xmlns="http://www.w3.org/1999/html">
+    <div class="companies20-content">
+        <div class="owl-one owl-carousel owl-theme">
+            <div class="item">
+                <li>
+                    <div class="slider-info banner-view bg bg2">
+                        <div class="banner-info">
+                            <div class="container">
+                                <div class="banner-info-bg">
+                                    <h5>Location is heavenly. Best to visit in week days to enjoy the peaceful beauty
+                                    </h5>
+                                    <a class="btn btn-style transparent-btn mt-sm-5 mt-4" href="services.html"> Our
+                                        Services</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="item">
+                <li>
+                    <div class="slider-info  banner-view banner-top1 bg bg2">
+                        <div class="banner-info">
+                            <div class="container">
+                                <div class="banner-info-bg">
+                                    <h5>Our new Turf will play a leading role in prompting the world peace.</h5>
+                                    <a class="btn btn-style transparent-btn mt-sm-5 mt-4" href="services.html"> Our
+                                        Services</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="item">
+                <li>
+                    <div class="slider-info banner-view banner-top2 bg bg2">
+                        <div class="banner-info">
+                            <div class="container">
+                                <div class="banner-info-bg">
+                                    <h5>Most Turf train their people with the booklets. We take ours to the ballet.
+                                    </h5>
+                                    <a class="btn btn-style transparent-btn mt-sm-5 mt-4" href="services.html"> Our
+                                        Services</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="item">
+                <li>
+                    <div class="slider-info banner-view banner-top3 bg bg2">
+                        <div class="banner-info">
+                            <div class="container">
+                                <div class="banner-info-bg">
+                                    <h5>Good tourism will follow good Turf. Experience our luxury hotel rooms</h5>
+                                    <a class="btn btn-style transparent-btn mt-sm-5 mt-4" href="services.html"> Our
+                                        Services</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- /main-slider -->
+{% if request.session.login_id %}
+<section class="w3l-availability-form pt-5 pb-5" id="booking">
+    <div class="container pt-lg-5 pb-lg-5">
+        <div class="row">
+            <div class="col-12 form-right text-center">
+                <h3 class="title-small">Check Availability</h3>
+                <form action="/fetchturfs" method="post">
+                    {%csrf_token%}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-input col-md-4 col-sm-06 mt-3 mx-auto ">
+                                <input type="text" name="areaname" required="" placeholder="enter turf category or location">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="bottom-btn col-md-4 col-sm-6 mt-5 mx-auto">
+                                <button class="btn btn-style btn-primary w-100 px-2">Check Availability</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="best-rooms w3l-blog py-0">
+    <div class="container  py-sm-4">
+        <div class="ban-content-inf row">
+            {%for turf,img in combineddata%}
+            <div class="maghny-gd-1 col-lg-4 col-md-6">
+                <div class="maghny-grid">
+                    <figure class="effect-lily">
+                            {%if img%}
+                                <img class="img-fluid" src="/media/{{img.photo}}" alt="#" height="200px" style=height:250px;">
+                            {%endif%}
+                        <figcaption class="mb-5">
+                            <div>
+                                <h4 class="room-title">{{turf.name}}</h4>
+                                <h4 class="top-text"> <b> {{turf.category}}</b></h4>
+                            </div>
+                        </figcaption>
+                    </figure>
+                    <div class="room-info">
+                        <h3 class="room-title"><a href="#url">{{turf.name}}</a></h3>
+                        <ul class="mb-3">
+                            <li><span class="fa fa-users"></span> {{turf.maximum_capacity}}</li>
+                            <li><span class="fa fa-map-marker"></span>{{turf.location}}</li>
+                            <li><span class="fa fa-clock-o" style="font-size:1.2rem;"></span>{{turf.duration_per_slot}} Hours</li>
+
+                        </ul>
+                        <h5>Slot Price: {{turf.price_per_slot}} &#x20B9;</h5>
+                        <p>Description: {{turf.description |slice:70}}</p>
+                        <a  href="/turfdetails/{{turf.id}}" class="btn mt-sm-4 mt-3">Book Now</a>
+                        <div class="room-info-bottom">
+                            <ul class="room-amenities">
+                                <li><a href="#url"><span class="fa fa-bed" title="Beds"></span></a></li>
+                                <li><a href="#url"><span class="fa fa-television" title="Television"></span></a></li>
+                                <li><a href="#url"><span class="fa fa-wheelchair-alt"
+                                            title="Private Bathroom"></span></a></li>
+                                <li><a href="#url"><span class="fa fa-motorcycle" title="Bike Rental"></span></a></li>
+                            </ul>
+                            <a href="/turfdetails/{{turf.id}}" class="btn view">Full Info →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+        </div>
+    </div>
+</div>
+{%endif%}
+
+
+
+<section class="pt-5 pb-5">
+    <div class="best-rooms py-5 bg-light">
+        <div class="container py-lg-5 py-sm-4">
+        <h2 class="text-center pb-5"> Turf Categories</h2>
+                <div class="maghny-gd-1 col-lg-12 mt-lg-0 mt-4">
+                    <div class="row">
+                        <div class="maghny-gd-1 col-lg-3 col-md-6 mt-sm-0  mb-4 mt-2">
+                            <div class="maghny-grid">
+                                <figure class="effect-lily border-radius">
+                                    <img class="img-fluid" src="static/assets/images/bb.jpg" alt="" />
+                                    <figcaption>
+                                        <div>
+                                            <h4>Golf  <span> Turf</span></h4>
+<!--                                            <p>From 20$ </p>-->
+                                        </div>
+
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="maghny-gd-1 col-lg-3 col-md-6 mt-sm-0 mb-4 mt-4 ">
+                            <div class="maghny-grid">
+                                <figure class="effect-lily border-radius">
+                                    <img class="img-fluid" src="static/assets/images/cricket.jpg" alt=""/>
+                                    <figcaption>
+                                        <div>
+                                            <h4>Cricket <span> Turf</span></h4>
+<!--                                            <p>From 20$ </p>-->
+                                        </div>
+
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="maghny-gd-1 col-lg-3 col-md-6 mt-4 mt-sm-0 mb-4">
+                            <div class="maghny-grid">
+                                <figure class="effect-lily border-radius">
+                                    <img class="img-fluid" src="static/assets/images/fg1.jpg" alt="" />
+                                    <figcaption>
+                                        <div>
+                                            <h4>Football <span> Turf</span></h4>
+<!--                                            <p>From 20$ </p>-->
+                                        </div>
+
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="maghny-gd-1 col-lg-3 col-md-6 mt-4  mb-4 mt-sm-0">
+                            <div class="maghny-grid">
+                                <figure class="effect-lily border-radius">
+                                    <img class="img-fluid" src="static/assets/images/tennis.jpg" alt="" />
+                                    <figcaption>
+                                        <div>
+                                            <h4>Badminton <span> Turf</span></h4>
+<!--                                            <p>From 20$ </p>-->
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- //quotation -->
+<div class="quotation py-5">
+    <div class="container py-xl-5 py-lg-3">
+        <div class="welcome-left text-center py-md-5 py-3">
+            <h3>Enjoy a Luxury experience. Discover our locaions. Relax and enjoy your holiday</h3>
+            {% if request.session.login_id %}
+            {%if manager%}
+            {%else%}
+            <a href="/userturflist.html" class="btn btn-style transparent-btn mt-sm-5 mt-4 mr-2">Book Now</a>
+            {%endif%}
+            {%endif%}
+            <a href="/contact.html" class="btn btn-style btn-primary mt-sm-5 mt-4">Contact Us</a>
+        </div>
+    </div>
+</div>
+<!-- //quotation -->
+
+<section class="w3l-logos py-5">
+    <div class="container py-lg-3">
+        <div class="row">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 logo-view">
+                <img src="static/assets/images/logo3.jpg" alt="company-logo" class="img-fluid" />
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 logo-view">
+                <img src="static/assets/images/logo2.jpg" alt="company-logo" class="img-fluid" />
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 logo-view mt-sm-0 mt-4">
+                <img src="static/assets/images/logo4.jpg" alt="company-logo" class="img-fluid" />
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 logo-view mt-md-0 mt-4">
+                <img src="static/assets/images/logo2.jpg" alt="company-logo" class="img-fluid" />
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 logo-view mt-lg-0 mt-4">
+                <img src="static/assets/images/logo3.jpg" alt="company-logo" class="img-fluid" />
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 logo-view mt-lg-0 mt-4">
+                <img src="static/assets/images/logo2.jpg" alt="company-logo" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</section>
+    <script src="{%static 'assets/js/responsive.js' %}"></script>
+
+{%endblock%}

@@ -1,0 +1,74 @@
+{% extends 'base.html'%}
+{%block title%} Turfs {%endblock%}
+
+{%block main%}
+{% load static %}
+
+<!-- //w3l-header -->
+<section class="w3l-breadcrumb">
+    <div class="breadcrum-bg py-sm-5 py-4">
+        <div class="container py-lg-3">
+            <h2>Turfs</h2>
+            <p><a href="index.html">Home</a> /  My Payments History</p>
+        </div>
+    </div>
+</section>
+
+<div class="container p-5">
+    <h2 class="mb-4">Available Turfs</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Turf Name</th>
+                <th scope="col">Time Slot</th>
+                <th scope="col">Ammount</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Transaction Id</th>
+                <th scope="col">Pay Time</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for payment in paymentdata %}
+            <tr>
+                <td>{{ payment.booking.turf.name }}</td>
+                <td>{{ payment.booking.slot}}</td>
+                <td>{{ payment.amount }}</td>
+                <td>{{ payment.payment_method }}</td>
+                <td>{{ payment.transaction_id }}</td>
+                <td>{{ payment.payment_date_time }}</td>
+                <td>{{ payment.payment_status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Pagination links -->
+              <div class="pagination ml-5 mt-5">
+                <span class="step-links">
+                  <span class="current">
+                    Page {{ paymentdata.number }} of {{ paymentdata.paginator.num_pages }}.
+                  </span>
+
+                  {% if paymentdata.has_previous %}
+                  <a href="?page=1" class="btn btn-secondary active">&laquo;</a>
+                  {% endif %}
+
+                  {% for i in paymentdata.paginator.page_range %}
+                  <span class="{% if paymentdata.number == i %}current{% endif %}">
+                    <a href="?page={{ i }}" class="btn btn-secondary active">{{ i }}</a>
+                  </span>
+                  {% endfor %}
+
+
+                  {% if paymentdata.has_next %}
+                  <a href="?page={{ paymentdata.paginator.num_pages }}" class="btn btn-secondary active">&raquo;</a>
+                  {% endif %}
+
+                </span>
+              </div>
+    <div>
+    </div>
+</div>
+{%endblock%}

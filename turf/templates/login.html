@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+{%block ttile%} Login {%endblock%}
+
+{%block main%}
+{% load static %}
+
+<!-- //w3l-header -->
+<section class="w3l-booking-top">
+    <!-- /form-16-section -->
+    <div class="booking-form-61 p-5">
+        <div class="container">
+            <div class="booking-top-gds">
+                <div class="form-right-inf">
+                    <div class="booking-form-content">
+                        <h6>Login Now</h6>
+                        <form action="/loginuser" class="book-depature-6 signin-form" method="post">
+                            {%csrf_token%}
+                            <div class="d-grid grid-col-4">
+                                <div class="hny-frm_grid">
+                                    <h5>Email</h5>
+                                    <input class="email" name="email" type="email" placeholder="Your Email" required>
+                                </div>
+                                <div class="hny-frm_grid mt-3">
+                                    <h5>Password</h5>
+                                    <input class="password" name="password" type="password" placeholder="password"
+                                        required>
+                                </div>
+                                <a class="text-primary mt-3" href="/forgotpasswordpage"> Forgot Password ?</a>
+                                <button class="btn btn-style btn-secondary book mt-3">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="booking-forms-16-info align-self">
+                    <h5>Your Reservation</h5>
+                    <h3 class="title-big">Turftime Triumph: Mastering Turf Reservations for Unparalleled Sports and Events Excitement.</h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{%endblock%}
